@@ -1,7 +1,7 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'dart:developer';
 import 'dart:io';
-
-import 'package:example/screens/home_page.dart';
 import 'package:example/screens/receipt_description_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -112,13 +112,14 @@ class _HomePageState extends State<HomePage> {
                 width: 300,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                    color: kBlack,
+                    color: kWhite,
+                    border: Border.all(color: kBlack, width: 2),
                     borderRadius: BorderRadius.all(Radius.circular(30))),
                 child: Text(
                   uploadPassportImage,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                      color: kWhite, fontSize: 20, fontWeight: FontWeight.bold),
+                      color: kBlack, fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ),
             ),
@@ -134,13 +135,14 @@ class _HomePageState extends State<HomePage> {
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                    color: kBlack,
+                    color: kWhite,
+                    border: Border.all(color: kBlack, width: 2),
                     borderRadius: BorderRadius.all(Radius.circular(30))),
                 child: TextFormField(
                   controller: urlController,
                   style: TextStyle(
-                      color: kWhite, fontSize: 16, fontWeight: FontWeight.bold),
-                  decoration: InputDecoration(),
+                      color: kBlack, fontSize: 16, fontWeight: FontWeight.bold),
+                  decoration: InputDecoration(hintText: "Enter Document URL"),
                   onEditingComplete: () {
                     if (urlController.text.isNotEmpty) {
                       Navigator.of(context).push(
