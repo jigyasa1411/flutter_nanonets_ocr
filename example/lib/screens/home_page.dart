@@ -83,7 +83,7 @@ class _HomePageState extends State<HomePage> {
                     );
                   }
                 } catch (err) {
-                  print(err);
+                  log(err.toString());
                 }
               },
               child: Container(
@@ -139,8 +139,4 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-}
-
-class A {
-  String _num = "1";
 }

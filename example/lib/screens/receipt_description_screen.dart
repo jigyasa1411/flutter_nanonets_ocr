@@ -22,6 +22,7 @@ class ReceiptPredictionScreen extends StatefulWidget {
 }
 
 class _ReceiptPredictionScreenState extends State<ReceiptPredictionScreen> {
+  String apiKey = "b1179314-e271-11ed-afa9-76ff1797c1e3";
   @override
   @override
   Widget build(BuildContext context) {
@@ -31,9 +32,9 @@ class _ReceiptPredictionScreenState extends State<ReceiptPredictionScreen> {
         ),
         body: FutureBuilder(
             future: widget.isUrl
-                ? NanonetsOCR().predictDocumentURL(widget.documentUrl,
+                ? NanonetsOCR().predictDocumentURL(apiKey, widget.documentUrl,
                     "7962b859-7f2c-4735-9ff3-54a7cc30cfbc", context)
-                : NanonetsOCR().predictDocumentFile(widget.image,
+                : NanonetsOCR().predictDocumentFile(apiKey, widget.image,
                     "7962b859-7f2c-4735-9ff3-54a7cc30cfbc", context),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.active) {

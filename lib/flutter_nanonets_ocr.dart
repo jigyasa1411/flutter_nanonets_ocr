@@ -3,38 +3,34 @@
 library flutter_nanonets_ocr;
 
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_nanonets_ocr/constants/api_constants.dart';
+import 'package:flutter_nanonets_ocr/models/base_response_model.dart';
+import 'package:flutter_nanonets_ocr/services/api_base.dart';
 import '../models/ocr_predictor_response_model.dart';
 
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
-}
-
 class NanonetsOCR {
-  String username = "b1179314-e271-11ed-afa9-76ff1797c1e3";
   String password = "";
 
   final dio = Dio();
   APIBase apiBase = APIBase();
   // Create OCR Model
   /// This function will be used to create an OCR model.
-  Future createOCRModel(List<String> categories, String modelType) async {
+  Future createOCRModel(
+      String apiKey, List<String> categories, String modelType) async {
     String basicAuth =
-        'Basic ${base64.encode(utf8.encode('$username:$password'))}';
+        'Basic ${base64.encode(utf8.encode('$apiKey:$password'))}';
 
     dio.options.headers["Authorization"] = basicAuth;
     final productResponse = await dio.post(
         "https://app.nanonets.com/api/v2/OCR/Model/",
         data: {"categories": categories, "model_type": modelType});
-    print(productResponse);
+    log(productResponse.toString());
     if (productResponse.statusCode == 200) {
-      print(productResponse.data);
+      log(productResponse.data);
       var response = productResponse.data;
       var jsonData = jsonDecode(jsonEncode(response));
 
@@ -42,23 +38,24 @@ class NanonetsOCR {
           ReceiptOcrPredictorResponseModel.fromJson(jsonData);
       return responseModel;
     } else {
-      print("Can't fetch user from the api.");
+      log("Can't fetch user from the api.");
       return ReceiptOcrPredictorResponseModel(
-          message: "", result: [], signedUrls: Map());
+          message: "", result: [], signedUrls: <String, SignedUrl>{});
     }
   }
 
   /// The function is to be used for fetching the documents details in case the document is in [File] format.
+  /// [apiKey] will be required and it will be generated from Nanonets.
   /// [image] will be of [File] type which will be fetched from device whether by using camera/gallery/file manager directories.
   /// [modelId] will be the model id created on Nanonets.
 
   Future<ReceiptOcrPredictorResponseModel> predictDocumentFile(
-      File? image, String modelId, BuildContext context) async {
+      String apiKey, File? image, String modelId, BuildContext context) async {
     var formData = FormData.fromMap({
       "file": await MultipartFile.fromFile(image!.path),
     });
     try {
-      final predictDocumentFileResponse = await apiBase.post(
+      final predictDocumentFileResponse = await apiBase.post(apiKey,
           apiUrl:
               "https://app.nanonets.com/api/v2/OCR/Model/$modelId/LabelFile/",
           bodyData: formData);
@@ -78,14 +75,15 @@ class NanonetsOCR {
   }
 
   /// The function is to be used for fetching the documents details in case the document is in [File] format.
+  /// [apiKey] will be required and it will be generated from Nanonets.
   /// [documentUrl] will be of [String] type, that user can either type or paste.
   /// [modelId] will be the model id created on Nanonets.
 
-  Future<ReceiptOcrPredictorResponseModel> predictDocumentURL(
+  Future<ReceiptOcrPredictorResponseModel> predictDocumentURL(String apiKey,
       String? documentUrl, String modelId, BuildContext context) async {
-    var productResponse;
+    BaseResponseModel productResponse;
     try {
-      productResponse = await apiBase.post(
+      productResponse = await apiBase.post(apiKey,
           apiUrl:
               "https://app.nanonets.com/api/v2/OCR/Model/$modelId/LabelUrls/",
           bodyData: {"url": documentUrl},
@@ -97,11 +95,11 @@ class NanonetsOCR {
         return responseModel;
       } else {
         return ReceiptOcrPredictorResponseModel(
-            message: "", result: [], signedUrls: Map());
+            message: "", result: [], signedUrls: <String, SignedUrl>{});
       }
     } catch (err) {
       return ReceiptOcrPredictorResponseModel(
-          message: "", result: [], signedUrls: Map());
+          message: "", result: [], signedUrls: <String, SignedUrl>{});
     }
   }
 }
