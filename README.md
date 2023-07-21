@@ -11,9 +11,7 @@ Add dependency
 You can use the command to add dio as a dependency with the latest stable version:
 
 ``` 
-
       $ dart pub add flutter_nanonets_ocr
-
 
 ```
 
@@ -21,10 +19,8 @@ Or you can manually add dio into the dependencies section in your pubspec.yaml:
 
 
 ```
-
      dependencies:
           flutter_nanonets_ocr: ^replace-with-latest-version
-
 
 ```
 
