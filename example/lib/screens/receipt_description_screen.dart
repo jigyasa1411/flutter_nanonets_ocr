@@ -22,20 +22,21 @@ class ReceiptPredictionScreen extends StatefulWidget {
 }
 
 class _ReceiptPredictionScreenState extends State<ReceiptPredictionScreen> {
-  String apiKey = "b1179314-e271-11ed-afa9-76ff1797c1e3";
+  String apiKey = "YOUR NANONETS API KEY HERE";
   @override
   @override
   Widget build(BuildContext context) {
+    NanonetsOCR nanonetsOCR = NanonetsOCR();
     return Scaffold(
         appBar: AppBar(
           title: Text(homeOCRPredictor),
         ),
         body: FutureBuilder(
             future: widget.isUrl
-                ? NanonetsOCR().predictDocumentURL(apiKey, widget.documentUrl,
-                    "7962b859-7f2c-4735-9ff3-54a7cc30cfbc", context)
-                : NanonetsOCR().predictDocumentFile(apiKey, widget.image,
-                    "7962b859-7f2c-4735-9ff3-54a7cc30cfbc", context),
+                ? nanonetsOCR.predictDocumentURL(apiKey, widget.documentUrl,
+                    "YOUR OCR MODEL ID HERE", context)
+                : nanonetsOCR.predictDocumentFile(
+                    apiKey, widget.image, "YOUR OCR MODEL ID HERE", context),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.active) {
                 return loadingWidget();
@@ -79,8 +80,8 @@ class _ReceiptPredictionScreenState extends State<ReceiptPredictionScreen> {
     );
   }
 
-  Widget predictedDataSection(BuildContext context,
-      AsyncSnapshot<ReceiptOcrPredictorResponseModel> snapshot) {
+  Widget predictedDataSection(
+      BuildContext context, AsyncSnapshot<OcrPredictorResponseModel> snapshot) {
     return Container(
       alignment: Alignment.center,
       padding: EdgeInsets.only(top: 50),

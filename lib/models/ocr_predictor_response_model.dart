@@ -1,5 +1,5 @@
-class ReceiptOcrPredictorResponseModel {
-  ReceiptOcrPredictorResponseModel({
+class OcrPredictorResponseModel {
+  OcrPredictorResponseModel({
     required this.message,
     required this.result,
     required this.signedUrls,
@@ -9,8 +9,8 @@ class ReceiptOcrPredictorResponseModel {
   final List<Result> result;
   final Map<String, SignedUrl> signedUrls;
 
-  factory ReceiptOcrPredictorResponseModel.fromJson(Map<String, dynamic> json) {
-    return ReceiptOcrPredictorResponseModel(
+  factory OcrPredictorResponseModel.fromJson(Map<String, dynamic> json) {
+    return OcrPredictorResponseModel(
       message: json["message"],
       result: json["result"] == null
           ? []
