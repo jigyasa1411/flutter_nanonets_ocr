@@ -21,7 +21,7 @@ Or you can manually add flutter_nanonets_ocr into the dependencies section in yo
 
 ```
   dependencies:
-      flutter_nanonets_ocr: ^0.0.7
+      flutter_nanonets_ocr: ^0.0.9
 
 ```
 
@@ -37,7 +37,7 @@ Or you can manually add flutter_nanonets_ocr into the dependencies section in yo
  NanonetsOCR nanonetsOCR = NanonetsOCR();
 
  FutureBuilder(
-            future: nanonetsOCR.predictDocumentFile(apiKey, widget.image,
+            future: nanonetsOCR.predictDocumentFile(apiKey, docImage,
                     "INSERT YOUR MODEL ID HERE", context),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.active) {
@@ -63,7 +63,7 @@ Or you can manually add flutter_nanonets_ocr into the dependencies section in yo
  NanonetsOCR nanonetsOCR = NanonetsOCR();
 
  FutureBuilder(
-            future: nanonetsOCR.predictDocumentURL(apiKey, widget.image,
+            future: nanonetsOCR.predictDocumentURL(apiKey, docImageUrl,
                     "INSERT YOUR MODEL ID HERE", context),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.active) {
