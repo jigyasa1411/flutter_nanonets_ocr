@@ -197,6 +197,7 @@ class Cell {
 }
 
 /// [SignedUrl] will be used to hold the information related to the the uploaded file or url.
+/// It will have data like [original], [thumbnail], [originalCompressed] etc data related to the [SignedUrl].
 class SignedUrl {
   SignedUrl({
     required this.original,

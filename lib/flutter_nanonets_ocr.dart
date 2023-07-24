@@ -2,8 +2,6 @@
 
 library flutter_nanonets_ocr;
 
-import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -29,40 +27,12 @@ class NanonetsOCR {
   /// [categories] can be seen as the data that we intend to fetch from the document, here we can pass on various labels (keys) to assign
   /// the fetched value to the category key.
   /// [modelType] will be the type of the model that we want to create, for OCR model value of [modelType] will be "ocr".
-  Future createOCRModel(
-      String apiKey, List<String> categories, String modelType) async {
-    String basicAuth =
-        'Basic ${base64.encode(utf8.encode('$apiKey:$password'))}';
-
-    dio.options.headers["Authorization"] = basicAuth;
-    final productResponse = await dio.post(
-        "https://app.nanonets.com/api/v2/OCR/Model/",
-        data: {"categories": categories, "model_type": modelType});
-    log(productResponse.toString());
-    if (productResponse.statusCode == 200) {
-      log(productResponse.data);
-      var response = productResponse.data;
-      var jsonData = jsonDecode(jsonEncode(response));
-
-      OcrPredictorResponseModel responseModel =
-          OcrPredictorResponseModel.fromJson(jsonData);
-      return responseModel;
-    } else {
-      log("Can't fetch user from the api.");
-      return OcrPredictorResponseModel(
-          message: "", result: [], signedUrls: <String, SignedUrl>{});
-    }
-  }
-
-  /// This function will be used to get details of a model by using it's id.
-  /// [apiKey] will be required and it will be generated from Nanonets.
-  /// [modelId] will be the model id created on Nanonets.
-
-  Future<GetModelByIdResponseModel> getOCRModelDetailsById(
-      String apiKey, String modelId, BuildContext context) async {
+  Future createOCRModel(String apiKey, List<String> categories,
+      String modelType, BuildContext context) async {
     try {
-      final predictDocumentFileResponse = await apiBase.get(apiKey,
-          apiUrl: "https://app.nanonets.com/api/v2/OCR/Model/$modelId");
+      final predictDocumentFileResponse = await apiBase.post(apiKey, context,
+          apiUrl: "https://app.nanonets.com/api/v2/OCR/Model/",
+          bodyData: {"categories": categories, "model_type": modelType});
       if (predictDocumentFileResponse.success == true) {
         GetModelByIdResponseModel responseModel =
             GetModelByIdResponseModel.fromJson(
@@ -76,6 +46,34 @@ class NanonetsOCR {
     }
   }
 
+  /// This function will be used to get details of a model by using it's id.
+  /// [apiKey] will be required and it will be generated from Nanonets.
+  /// [modelId] will be the model id created on Nanonets.
+
+  Future<GetModelByIdResponseModel> getOCRModelDetailsById(
+      String apiKey, String modelId, BuildContext context) async {
+    try {
+      // Calling base get method along with apiUrl, apiKey and context as it's parameter.
+      final predictDocumentFileResponse = await apiBase.get(apiKey, context,
+          apiUrl: "https://app.nanonets.com/api/v2/OCR/Model/$modelId");
+
+      // If the success flag from the above api call is true then convert the json response from base class to a dart
+      // constructor and return the value to calling variable/widget.
+      if (predictDocumentFileResponse.success == true) {
+        GetModelByIdResponseModel responseModel =
+            GetModelByIdResponseModel.fromJson(
+                predictDocumentFileResponse.result);
+        return responseModel;
+      } else {
+        // If success flag is false then return an empty constructor of the model to calling variable/widget.
+        return GetModelByIdResponseModel();
+      }
+    } catch (err) {
+      // If success flag is false then return an empty constructor of the model to calling variable/widget.
+      return GetModelByIdResponseModel();
+    }
+  }
+
   /// The function is to be used for fetching the documents details in case the document is in [File] format.
   /// [apiKey] will be required and it will be generated from Nanonets.
   /// [image] will be of [File] type which will be fetched from device whether by using camera/gallery/file manager directories.
@@ -83,26 +81,39 @@ class NanonetsOCR {
 
   Future<OcrPredictorResponseModel> predictDocumentFile(
       String apiKey, File? image, String modelId, BuildContext context) async {
+    // Preparing the multipart data to send in the Post request for predicting data using document file.
     var formData = FormData.fromMap({
       "file": await MultipartFile.fromFile(image!.path),
     });
+    BaseResponseModel? predictDocumentFileResponse;
+
     try {
-      final predictDocumentFileResponse = await apiBase.post(apiKey,
+      // Calling the post api using base api implementation by passing the apiKey, apiUrl, bodyData as parameters.
+      predictDocumentFileResponse = await apiBase.post(apiKey, context,
           apiUrl:
               "https://app.nanonets.com/api/v2/OCR/Model/$modelId/LabelFile/",
           bodyData: formData);
+
+      // If the success flag from the above api call is true then convert the json response from base class to a dart
+      // constructor and return the value to calling variable/widget.
       if (predictDocumentFileResponse.success == true) {
         OcrPredictorResponseModel responseModel =
             OcrPredictorResponseModel.fromJson(
                 predictDocumentFileResponse.result);
         return responseModel;
       } else {
+        // If success flag is false then return a relevant constructor of the model to calling variable/widget.
         return OcrPredictorResponseModel(
-            message: "", result: [], signedUrls: <String, SignedUrl>{});
+            message: predictDocumentFileResponse.message,
+            result: [],
+            signedUrls: <String, SignedUrl>{});
       }
     } catch (err) {
+      // If success flag is false then return a relevant constructor of the model to calling variable/widget.
       return OcrPredictorResponseModel(
-          message: "", result: [], signedUrls: <String, SignedUrl>{});
+          message: predictDocumentFileResponse?.message ?? "",
+          result: [],
+          signedUrls: <String, SignedUrl>{});
     }
   }
 
@@ -113,26 +124,36 @@ class NanonetsOCR {
 
   Future<OcrPredictorResponseModel> predictDocumentURL(String apiKey,
       String? documentUrl, String modelId, BuildContext context) async {
-    BaseResponseModel productResponse;
+    BaseResponseModel? productResponse;
     try {
-      /// We are using common post method from the base API class that we created.
-      productResponse = await apiBase.post(apiKey,
+      /// We are using common post method from the base API class that we created by passing apiKey, apiUrl, bodyData and required
+      /// options type.
+      productResponse = await apiBase.post(apiKey, context,
           apiUrl:
               "https://app.nanonets.com/api/v2/OCR/Model/$modelId/LabelUrls/",
           bodyData: {"url": documentUrl},
           options: Options(contentType: "application/x-www-form-urlencoded"));
+
+      // If the success flag from the above api call is true then convert the json response from base class to a dart
+      // constructor and return the value to calling variable/widget.
 
       if (productResponse.success = true) {
         OcrPredictorResponseModel responseModel =
             OcrPredictorResponseModel.fromJson(productResponse.result);
         return responseModel;
       } else {
+        // If success flag is false then return a relevant constructor of the model to calling variable/widget.
         return OcrPredictorResponseModel(
-            message: "", result: [], signedUrls: <String, SignedUrl>{});
+            message: productResponse.message,
+            result: [],
+            signedUrls: <String, SignedUrl>{});
       }
     } catch (err) {
+      // If success flag is false then return a relevant constructor of the model to calling variable/widget.
       return OcrPredictorResponseModel(
-          message: "", result: [], signedUrls: <String, SignedUrl>{});
+          message: productResponse?.message ?? "",
+          result: [],
+          signedUrls: <String, SignedUrl>{});
     }
   }
 }
