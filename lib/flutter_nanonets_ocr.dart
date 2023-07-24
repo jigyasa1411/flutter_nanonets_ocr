@@ -115,6 +115,7 @@ class NanonetsOCR {
       String? documentUrl, String modelId, BuildContext context) async {
     BaseResponseModel productResponse;
     try {
+      /// We are using common post method from the base API class that we created.
       productResponse = await apiBase.post(apiKey,
           apiUrl:
               "https://app.nanonets.com/api/v2/OCR/Model/$modelId/LabelUrls/",
