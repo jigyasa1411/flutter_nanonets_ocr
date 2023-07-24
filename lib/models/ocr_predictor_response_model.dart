@@ -8,8 +8,13 @@ class OcrPredictorResponseModel {
     required this.signedUrls,
   });
 
+  /// [message] will store the success/failure message coming from the API call.
   final String? message;
+
+  /// [result] will contain result of the prediction.
   final List<Result> result;
+
+  /// [signedUrls] will contain information about the uploaded image information, whether in file mode or url mode.
   final Map<String, SignedUrl> signedUrls;
 
   factory OcrPredictorResponseModel.fromJson(Map<String, dynamic> json) {
@@ -26,7 +31,7 @@ class OcrPredictorResponseModel {
 
 /// [Result] class will be used to store the data received from the "result" key from the API response.
 /// It will consist of [message], [input], [prediction], [requestFileId] etc data about the given input and output.
-/// [prediction] is the main output list, here the predicted fields will be stored.
+
 class Result {
   Result({
     required this.message,
@@ -42,16 +47,36 @@ class Result {
     required this.processingType,
   });
 
+  /// [message] will contain success message from the API.
   final String? message;
+
+  /// [input] will store the value of input image file or url.
   final String? input;
+
+  /// [prediction] is the main output list, here the predicted fields will be stored.
   final List<Prediction> prediction;
+
+  /// [page] tells about the page of the result.
   final int? page;
+
+  /// [requestFileId] contains Id of requet file.
   final String? requestFileId;
+
+  /// [filepath] contains path of the uploaded file in nanonets.
   final String? filepath;
+
+  /// [id] stores id of the result.
   final String? id;
+
   final int? rotation;
+
+  /// [fileUrl] contains uploaded file path in raw predictions.
   final String? fileUrl;
+
+  /// [requestMetadata] conatins metadata of request file or url.
   final String? requestMetadata;
+
+  /// [processingType] contains the type of processing of the requested file.
   final String? processingType;
 
   factory Result.fromJson(Map<String, dynamic> json) {
@@ -98,17 +123,32 @@ class Prediction {
     required this.cells,
   });
 
+  /// [id] contains id of the prediction.
   final String? id;
+
+  /// [label] conatains label/category of the prediction.
   final String? label;
   final int? xmin;
   final int? ymin;
   final int? xmax;
   final int? ymax;
+
+  /// [score] conatins prediction score of the prediction result.
   final double? score;
+
+  /// [ocrText] conatains value of the label/category predicted by the OCR.
   final String? ocrText;
+
+  /// [type] tells about the type of the label e.g. field, table etc.
   final String? type;
+
+  /// [status] tells about the status of the prediction i.e. wrong or right prediction.
   final String? status;
+
+  /// [pageNo] contains page of the prediction made.
   final int? pageNo;
+
+  /// [labelId] conatins id of the label/category.
   final String? labelId;
   final List<Cell> cells;
 

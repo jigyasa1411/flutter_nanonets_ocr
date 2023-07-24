@@ -14,15 +14,31 @@ String getModelByIdResponseModelToJson(GetModelByIdResponseModel data) =>
 /// This model will contain details like [modelId], [modelType], [state], [accuracy], [categories] etc. details about the
 /// model of the given id.
 class GetModelByIdResponseModel {
+  /// [modelId] will be the id associated with the model.
   String? modelId;
+
+  /// [modelType] represents the type of classification model, which in case of OCR, will be "ocr".
   String? modelType;
+
+  /// [state] will represent the state of the model.
   int? state;
+
+  /// [status] will tell about the current status of the model.
   String? status;
+
+  /// [accuracy] represents the accuracy of the OCR model.
   double? accuracy;
+
+  /// [List] of [Category] will give information about the categories/labels that are used in the given model.
   List<Category>? categories;
+
+  /// [email] will return the email id of the account where the model is created.
   String? email;
+
+  /// [isPublic] tells the accessibility of the model.
   bool? isPublic;
 
+  /// [isPaid] tells about if the API is being created from a subcribed account or not.
   bool? isPaid;
 
   GetModelByIdResponseModel({
@@ -68,11 +84,18 @@ class GetModelByIdResponseModel {
 /// Each category will contain [name], [count], [description] about the respective [Category].
 
 class Category {
+  /// [name] represnts the name of the respective category.
   String? name;
+
+  /// [count] will keep the count of this particular category.
   int? count;
+
+  /// [id] of the respective category.
   String? id;
   String? routing;
   bool? currentlyRenaming;
+
+  /// [description] represents the decsription or value of the model, if any. ELse it will be empty.
   String? description;
 
   Category({
