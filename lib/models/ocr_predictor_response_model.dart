@@ -24,6 +24,9 @@ class OcrPredictorResponseModel {
   }
 }
 
+/// [Result] class will be used to store the data received from the "result" key from the API response.
+/// It will consist of [message], [input], [prediction], [requestFileId] etc data about the given input and output.
+/// [prediction] is the main output list, here the predicted fields will be stored.
 class Result {
   Result({
     required this.message,
@@ -71,6 +74,13 @@ class Result {
   }
 }
 
+/// [Prediction] class will be used to store the data received from "prediction" key in [Result] class.
+/// [Result] class will contain [List] of [Prediction] class implying that there will be a list of predictions
+/// stored in the list which will be of [Prediction] type.
+///
+/// [Prediction] class will have [id], [score], [label], [ocrText] etc.
+/// [label] will be the category of the OCR model assigned to that prediction and [ocrText] will be the value of that
+/// particular category.
 class Prediction {
   Prediction({
     required this.id,
@@ -123,6 +133,7 @@ class Prediction {
   }
 }
 
+/// [Cell] will basically provide the tabular information about the [label], [verificationStatus] etc about the prediction made.
 class Cell {
   Cell({
     required this.id,
@@ -185,6 +196,7 @@ class Cell {
   }
 }
 
+/// [SignedUrl] will be used to hold the information related to the the uploaded file or url.
 class SignedUrl {
   SignedUrl({
     required this.original,

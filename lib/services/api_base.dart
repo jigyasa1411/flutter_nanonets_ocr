@@ -2,15 +2,18 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter_nanonets_ocr/models/base_response_model.dart';
 
+/// [APIBase] class contains attributes, properties and methods for base implementation of the http requests like [GET], [POST].
 class APIBase {
+  /// [password] will be used for Basic Auth implementations in the APIs.
   String password = "";
   final dio = Dio();
 
+  /// [post] method will be used to call [POST] method in all the methods which is making use of [POST] methods.
+  /// [apiUrl] will be used to specify the particular url that will be used for the API call.
+  /// [bodyData] will be used to set the body data for the [POST] method if any.
+  /// [options] will be the [POST] request [Options] given by the [Dio] package.
   Future<BaseResponseModel> post(String apiKey,
-      {String? apiUrl,
-      dynamic bodyData,
-      dynamic responseClass,
-      Options? options}) async {
+      {String? apiUrl, dynamic bodyData, Options? options}) async {
     String basicAuth =
         'Basic ${base64.encode(utf8.encode('$apiKey:$password'))}';
 
@@ -40,12 +43,11 @@ class APIBase {
     }
   }
 
-  /// Common get API method
+  /// [get] method will be used to call [GET] method in all the methods which is making use of [GET] methods.
+  /// [apiUrl] will be used to specify the particular url that will be used for the API call.
+  /// [options] will be the [POST] request [Options] given by the [Dio] package.
   Future<BaseResponseModel> get(String apiKey,
-      {String? apiUrl,
-      dynamic bodyData,
-      dynamic responseClass,
-      Options? options}) async {
+      {String? apiUrl, dynamic bodyData, Options? options}) async {
     String basicAuth =
         'Basic ${base64.encode(utf8.encode('$apiKey:$password'))}';
 

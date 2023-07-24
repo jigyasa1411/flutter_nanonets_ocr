@@ -13,13 +13,22 @@ import 'package:flutter_nanonets_ocr/models/get_ocr_model_by_id_response_model.d
 import 'package:flutter_nanonets_ocr/services/api_base.dart';
 import '../models/ocr_predictor_response_model.dart';
 
+/// [NanonetsOCR] is the base class which will be containing all the methods, properties and attributes required for the implementation
+/// of the nanonets APIs.
 class NanonetsOCR {
+  /// [password] is used for the Basic Auth of the DIO requets.
   String password = "";
 
   final dio = Dio();
+
+  /// [APIBase] is the class which contains the implementation of base api requests i.e. [GET], [POST].
   APIBase apiBase = APIBase();
   // Create OCR Model
   /// This function will be used to create an OCR model.
+  /// [apiKey] will be the key generated from Nanonets.
+  /// [categories] can be seen as the data that we intend to fetch from the document, here we can pass on various labels (keys) to assign
+  /// the fetched value to the category key.
+  /// [modelType] will be the type of the model that we want to create, for OCR model value of [modelType] will be "ocr".
   Future createOCRModel(
       String apiKey, List<String> categories, String modelType) async {
     String basicAuth =

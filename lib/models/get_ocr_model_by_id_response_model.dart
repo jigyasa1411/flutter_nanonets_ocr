@@ -84,6 +84,7 @@ class GetModelByIdResponseModel {
       };
 }
 
+/// [Category] class will be used to get details about each category of the model.
 class Category {
   String? name;
   int? count;
