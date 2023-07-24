@@ -4,6 +4,9 @@
 
 import 'dart:convert';
 
+/// [GetModelByIdResponseModel] is the model class that needs to be used when we want to get a particular model's details
+/// like name, type, accuracy etc.
+
 GetModelByIdResponseModel getModelByIdResponseModelFromJson(String str) =>
     GetModelByIdResponseModel.fromJson(json.decode(str));
 

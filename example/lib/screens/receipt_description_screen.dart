@@ -24,7 +24,6 @@ class ReceiptPredictionScreen extends StatefulWidget {
 class _ReceiptPredictionScreenState extends State<ReceiptPredictionScreen> {
   String apiKey = "YOUR NANONETS API KEY HERE";
   @override
-  @override
   Widget build(BuildContext context) {
     NanonetsOCR nanonetsOCR = NanonetsOCR();
     return Scaffold(
