@@ -8,7 +8,7 @@ Nanonets provides an OCR service where we can create models, train them and use 
 
 ## Get started
 Add dependency 
-You can use the command to add dio as a dependency with the latest stable version:
+You can use the command to add flutter_nanonets_ocr as a dependency with the latest stable version:
 
 ``` 
       $ dart pub add flutter_nanonets_ocr
@@ -20,7 +20,60 @@ Or you can manually add dio into the dependencies section in your pubspec.yaml:
 
 ```
      dependencies:
-          flutter_nanonets_ocr: ^replace-with-latest-version
+          flutter_nanonets_ocr: ^0.0.4
+
+```
+
+
+## Example
+
+### Fetching details using document file
+
+```
+ import 'package:nanonets_ocr_app/screens/receipt_description_screen.dart';
+  
+ String apiKey = "INSERT YOUR NANONETS API KEY";
+
+ NanonetsOCR nanonetsOCR = NanonetsOCR();
+
+ FutureBuilder(
+            future: nanonetsOCR.predictDocumentFile(apiKey, widget.image,
+                    "INSERT YOUR MODEL ID HERE", context),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.active) {
+                return loadingWidget();
+              } else if (snapshot.connectionState == ConnectionState.done) {
+                return yourSuccessWidget();
+              } else {
+                return loadingWidget();
+              }
+            });
+
+
+```
+
+### Fetching details using document url
+
+```
+ import 'package:nanonets_ocr_app/screens/receipt_description_screen.dart';
+  
+ String apiKey = "INSERT YOUR NANONETS API KEY";
+
+ NanonetsOCR nanonetsOCR = NanonetsOCR();
+
+ FutureBuilder(
+            future: nanonetsOCR.predictDocumentURL(apiKey, widget.image,
+                    "INSERT YOUR MODEL ID HERE", context),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.active) {
+                return loadingWidget();
+              } else if (snapshot.connectionState == ConnectionState.done) {
+                return yourSuccessWidget();
+              } else {
+                return loadingWidget();
+              }
+            });
+
 
 ```
 
