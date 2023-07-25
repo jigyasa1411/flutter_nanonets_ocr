@@ -1,7 +1,7 @@
 name: flutter_nanonets_ocr
 description: A package for using Nanonets OCR api calls easily in the flutter application without having to write long code to implement it manually.
-version: 0.0.10
-homepage: https://github.com/jigyasa1411/flutter_nanonets_ocr/blob/master/README.md
+version: 0.0.11
+homepage: https://github.com/jigyasa1411/flutter_nanonets_ocr/blob/master/
 repository: https://github.com/jigyasa1411/flutter_nanonets_ocr
 
 environment:
