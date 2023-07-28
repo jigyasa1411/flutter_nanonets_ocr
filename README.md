@@ -2,7 +2,9 @@
 ## Description
 Nanonets provides an OCR service where we can create models, train them and use them for OCR predictions. This package is developed to make usage of Nanonets OCR api directly without having to write manual code for integrating it in your application.
 
-- flutter_nanonets_ocr: [link](https://pub.dev/packages/flutter_nanonets_ocr)
+***Follow this blog for step by step integration of Nanonets OCR model in a Flutter application:*** ***[Implementing Nanonets OCR in Flutter](https://medium.com/@jigyasa14ch99/implementing-nanonets-ocr-in-flutter-613881dde173)***
+
+- flutter_nanonets_ocr: [flutter_nanonets_ocr](https://pub.dev/packages/flutter_nanonets_ocr)
 
   [![Pub](https://img.shields.io/pub/v/flutter_nanonets_ocr.svg?label=dev&include_prereleases)](https://pub.dev/packages/flutter_nanonets_ocr)
 
@@ -21,7 +23,7 @@ Or you can manually add flutter_nanonets_ocr into the dependencies section in yo
 
 ```
   dependencies:
-      flutter_nanonets_ocr: ^0.0.11
+      flutter_nanonets_ocr: ^0.0.12
 
 ```
 
@@ -32,13 +34,13 @@ Or you can manually add flutter_nanonets_ocr into the dependencies section in yo
 ```
  import 'package:flutter_nanonets_ocr/flutter_nanonets_ocr.dart';
   
- String apiKey = "INSERT YOUR NANONETS API KEY";
+ String apiKey = "INSERT NANONETS API KEY";
 
  NanonetsOCR nanonetsOCR = NanonetsOCR();
 
  FutureBuilder(
             future: nanonetsOCR.predictDocumentFile(apiKey, docImage,
-                    "INSERT YOUR MODEL ID HERE", context),
+                    "INSERT OCR MODEL ID HERE", context),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.active) {
                 return loadingWidget();
@@ -58,13 +60,13 @@ Or you can manually add flutter_nanonets_ocr into the dependencies section in yo
 ```
  import 'package:flutter_nanonets_ocr/flutter_nanonets_ocr.dart';
   
- String apiKey = "INSERT YOUR NANONETS API KEY";
+ String apiKey = "INSERT NANONETS API KEY";
 
  NanonetsOCR nanonetsOCR = NanonetsOCR();
 
  FutureBuilder(
             future: nanonetsOCR.predictDocumentURL(apiKey, docImageUrl,
-                    "INSERT YOUR MODEL ID HERE", context),
+                    "INSERT OCR MODEL ID HERE", context),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.active) {
                 return loadingWidget();
