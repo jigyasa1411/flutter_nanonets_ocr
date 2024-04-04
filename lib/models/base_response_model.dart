@@ -1,4 +1,5 @@
 /// [BaseResponseModel] acts as a base class to get response from Base API class made using dio.
+library;
 
 class BaseResponseModel {
   /// [result] will hold the actual response received by the api call.

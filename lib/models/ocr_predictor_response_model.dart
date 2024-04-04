@@ -1,5 +1,6 @@
 /// [OcrPredictorResponseModel] is used when we want to fetch data from a document either by uploading docment files or by using
 /// document url.
+library;
 
 class OcrPredictorResponseModel {
   OcrPredictorResponseModel({
