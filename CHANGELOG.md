@@ -1,6 +1,5 @@
-## 0.0.12
+## 0.0.14
 
-- Added link to detailed article for step by step integration.
-
+- Added support for flutter 3.19.1
 
 

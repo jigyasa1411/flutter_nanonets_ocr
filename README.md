@@ -23,7 +23,7 @@ Or you can manually add flutter_nanonets_ocr into the dependencies section in yo
 
 ```
   dependencies:
-      flutter_nanonets_ocr: ^0.0.12
+      flutter_nanonets_ocr: ^0.0.14
 
 ```
 
