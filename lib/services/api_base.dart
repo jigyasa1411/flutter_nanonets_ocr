@@ -42,17 +42,21 @@ class APIBase {
     } catch (err) {
       if (err is DioException) {
         /// Showing SnackBar when there is any API exception takes place.
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(
-                "${err.response?.statusMessage} [${err.response?.statusCode}]")));
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(
+                  "${err.response?.statusMessage} [${err.response?.statusCode}]")));
+        }
 
         /// Return a null constructor with respective error message and false success flag.
         return BaseResponseModel(
             result: null, success: false, message: err.response?.statusMessage);
       } else {
         /// Showing SnackBar when there is some other exception which is not related to API request.
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("Something went wrong!")));
+        if (context.mounted) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text("Something went wrong!")));
+        }
 
         /// Return a null constructor with respective error message and false success flag.
         return BaseResponseModel(
@@ -91,17 +95,21 @@ class APIBase {
     } catch (err) {
       if (err is DioException) {
         /// Showing SnackBar when there is any API exception takes place.
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(
-                "${err.response?.statusMessage} [${err.response?.statusCode}]")));
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(
+                  "${err.response?.statusMessage} [${err.response?.statusCode}]")));
+        }
 
         /// Return a null constructor with respective error message and false success flag.
         return BaseResponseModel(
             result: null, success: false, message: err.response?.statusMessage);
       } else {
         /// Showing SnackBar when there is some other exception which is not related to API request.
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("Something went wrong!")));
+        if (context.mounted) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text("Something went wrong!")));
+        }
 
         /// Return a null constructor with respective error message and false success flag.
         return BaseResponseModel(
